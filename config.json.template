@@ -1,0 +1,12 @@
+{
+  "TVDB":{
+    "user":"TestUser",
+    "userkey":"user-key",
+    "apikey": "apikey"
+  },
+  "CalDav":{
+    "url":"test-url",
+    "user":"test-user",
+    "password":"pw"
+  }
+}
