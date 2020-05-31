@@ -4,6 +4,7 @@ from datetime import date
 import json
 import requests
 import pandas as pd
+import numpy as np
 import caldav
 from caldav.elements import dav
 
@@ -94,15 +95,12 @@ class tvdb:
             page = json_text["links"]["next"]
 
         #pd.to_datetime(df['firstAired'], format='%Y-%m-%d')
+        df = df.replace('',np.NaN)
+        df['firstAired'] = pd.to_datetime(df['firstAired'], errors='coerce')
+        df = df.dropna(subset=['firstAired'])
         df = df.set_index("firstAired")
-        df.index = pd.to_datetime(df.index)
         self.episodes = df
         return df
-
-def test(ical):
-    reminder = todo()
-    reminder.update("11791508-cbff-4bcb-b013-7fb9973e8c31","Billions.S01E06", "20200602", ical)
-
 
 def main(ical):
     """ Main entry point of the app """
@@ -126,7 +124,7 @@ def main(ical):
                 if title not in reminder.episodes.keys():
                     reminder.update(show_uid,title, aired, ical)
                 else:
-                    print ("Already in", title)
+                    z=1
         else:
             reminder.todo_completed(show_uid)
 
